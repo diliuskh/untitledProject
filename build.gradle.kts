@@ -19,7 +19,7 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation(kotlin("kotlin-reflect"))
+    implementation(kotlin("reflect"))
     implementation(kotlin("stdlib-jdk8"))
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("junit", "junit", "4.12")
