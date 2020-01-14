@@ -1,6 +1,12 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     java
+    kotlin("plugin.jpa") version "1.3.61"
+    id("org.springframework.boot") version "2.2.2.RELEASE"
+    id("io.spring.dependency-management") version "1.0.8.RELEASE"
     kotlin("jvm") version "1.3.61"
+    kotlin("plugin.spring") version "1.3.61"
 }
 
 group = "net.dilius"
@@ -11,8 +17,13 @@ repositories {
 }
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation(kotlin("kotlin-reflect"))
     implementation(kotlin("stdlib-jdk8"))
-    testCompile("junit", "junit", "4.12")
+    runtimeOnly("org.springframework.boot:spring-boot-devtools")
+    testImplementation("junit", "junit", "4.12")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 configure<JavaPluginConvention> {
@@ -20,9 +31,15 @@ configure<JavaPluginConvention> {
 }
 tasks {
     compileKotlin {
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions {
+            freeCompilerArgs = listOf("-Xjsr305=strict")
+            jvmTarget = "1.8"
+        }
     }
     compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions {
+            freeCompilerArgs = listOf("-Xjsr305=strict")
+            jvmTarget = "1.8"
+        }
     }
 }
