@@ -17,6 +17,7 @@ repositories {
 }
 
 dependencies {
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation(kotlin("reflect"))
