@@ -1,0 +1,18 @@
+{
+  "properties": [
+    {
+      "name": "application.title",
+      "type": "java.lang.String",
+      "description": "Application title."
+    },
+    {
+      "name": "application.banner.title",
+      "type": "java.lang.String",
+      "description": "Banner title."
+    },
+    {
+      "name": "application.banner.content",
+      "type": "java.lang.String",
+      "description": "Banner location."
+    }
+  ] }

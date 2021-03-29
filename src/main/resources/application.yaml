@@ -1,0 +1,23 @@
+application:
+  title: "Untitled"
+  banner:
+    title: "banner"
+    content: "Some banner"
+
+server:
+  address: 0.0.0.0
+  port: 8080
+  compression:
+    enabled: true
+  http2:
+    enabled: true
+  netty:
+    connection-timeout: 1000ms
+
+spring:
+  codec:
+    log-request-details: true
+
+logging:
+  level:
+    web: debug

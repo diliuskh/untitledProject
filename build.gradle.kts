@@ -13,8 +13,12 @@ group = "net.dilius"
 version = "1.0-SNAPSHOT"
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
+
+val coroutinesVersion = "1.4.3"
+val junitVersion = "5.7.1"
+val kmongoVersion = "4.2.5"
 
 dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
@@ -22,10 +26,18 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib-jdk8"))
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:$coroutinesVersion")
+
+    implementation("org.litote.kmongo:kmongo:$kmongoVersion")
+
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
-    testImplementation(platform("org.junit:junit-bom:5.7.1"))
+
+    testImplementation(platform("org.junit:junit-bom:$junitVersion"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
 }
 
 configure<JavaPluginConvention> {
