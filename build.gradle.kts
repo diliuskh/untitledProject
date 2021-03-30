@@ -30,7 +30,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:$coroutinesVersion")
 
-    implementation("org.litote.kmongo:kmongo:$kmongoVersion")
+    implementation("org.litote.kmongo:kmongo-coroutine:$kmongoVersion")
+    implementation("org.litote.kmongo:kmongo-reactor:$kmongoVersion")
 
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
 
