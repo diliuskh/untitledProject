@@ -1,12 +1,16 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    val kotlinVersion = "1.5.0"
+    val springBootVersion = "2.4.5"
+    val springDepsVersion = "1.0.11.RELEASE"
+
     java
-    kotlin("plugin.jpa") version "1.5.0-M2"
-    id("org.springframework.boot") version "2.4.4"
-    id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("jvm") version "1.5.0-M2"
-    kotlin("plugin.spring") version "1.5.0-M2"
+    kotlin("plugin.jpa") version kotlinVersion
+    id("org.springframework.boot") version springBootVersion
+    id("io.spring.dependency-management") version springDepsVersion
+    kotlin("jvm") version kotlinVersion
+    kotlin("plugin.spring") version kotlinVersion
 }
 
 group = "net.dilius"
@@ -16,9 +20,9 @@ repositories {
     jcenter()
 }
 
-val coroutinesVersion = "1.4.3"
-val junitVersion = "5.7.1"
-val kmongoVersion = "4.2.5"
+val coroutinesVersion = "1.5.0-RC"
+val junitVersion = "5.8.0-M1"
+val kmongoVersion = "4.2.6"
 
 dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
