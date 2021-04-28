@@ -17,7 +17,7 @@ group = "net.dilius"
 version = "1.0-SNAPSHOT"
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 val coroutinesVersion = "1.5.0-RC"
