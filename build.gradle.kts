@@ -23,26 +23,30 @@ repositories {
 val coroutinesVersion = "1.5.0-RC"
 val junitVersion = "5.8.0-M1"
 val kmongoVersion = "4.2.6"
+val springDocVersion = "1.5.8"
 
 dependencies {
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    annotationProcessor("org.springframework.boot", "spring-boot-configuration-processor")
+    implementation("org.springframework.boot", "spring-boot-starter-webflux")
+    implementation("org.springdoc","springdoc-openapi-webflux-core", springDocVersion)
+    implementation("org.springdoc","springdoc-openapi-webflux-ui", springDocVersion)
+    implementation("org.springdoc","springdoc-openapi-kotlin", springDocVersion)
+    implementation("com.fasterxml.jackson.module", "jackson-module-kotlin")
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib-jdk8"))
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:$coroutinesVersion")
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", coroutinesVersion)
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-reactor", coroutinesVersion)
 
-    implementation("org.litote.kmongo:kmongo-coroutine:$kmongoVersion")
-    implementation("org.litote.kmongo:kmongo-reactor:$kmongoVersion")
+    implementation("org.litote.kmongo", "kmongo-coroutine", kmongoVersion)
+    implementation("org.litote.kmongo", "kmongo-reactor", kmongoVersion)
 
-    runtimeOnly("org.springframework.boot:spring-boot-devtools")
+    runtimeOnly("org.springframework.boot", "spring-boot-devtools")
 
     testImplementation(platform("org.junit:junit-bom:$junitVersion"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+    testImplementation("org.junit.jupiter", "junit-jupiter")
+    testImplementation("org.springframework.boot", "spring-boot-starter-test")
+    testImplementation("org.jetbrains.kotlinx", "kotlinx-coroutines-test", coroutinesVersion)
 }
 
 configure<JavaPluginConvention> {

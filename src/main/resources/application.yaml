@@ -13,11 +13,51 @@ server:
     enabled: true
   netty:
     connection-timeout: 1000ms
+    validate-headers: true
+    max-chunk-size: 8192B
+    initial-buffer-size: 1024B
+    max-initial-line-length: 4096B
+    h2c-max-content-length: 0B
+  error:
+    include-binding-errors: always
+  forward-headers-strategy: framework
 
 spring:
+  main:
+    banner-mode: off
+    cloud-platform: kubernetes
+    log-startup-info: on
+    web-application-type: reactive
   codec:
     log-request-details: true
+  cache:
+    type: redis
+    redis:
+      cache-null-values: true
+      key-prefix: untitled
+      time-to-live: 10000ms
+      enable-statistics: true
+      use-key-prefix: true
+  jackson:
+    locale: en_US
+    serialization: true
+    deserialization: true
+    mapper: true
+    generator: true
+    property-naming-strategy: SNAKE_CASE
+
+springdoc:
+  api-docs:
+    path: /api-docs
+    enabled: true
+  swagger-ui:
+    enabled: true
 
 logging:
   level:
     web: debug
+  charset:
+    console: UTF-8
+    file: UTF-8
+trace: true
+debug: true
