@@ -40,10 +40,6 @@ spring:
       use-key-prefix: true
   jackson:
     locale: en_US
-    serialization: true
-    deserialization: true
-    mapper: true
-    generator: true
     property-naming-strategy: SNAKE_CASE
 
 springdoc:
