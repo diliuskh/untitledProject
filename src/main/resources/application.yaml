@@ -12,6 +12,7 @@ server:
   http2:
     enabled: true
   netty:
+    threads: 16
     connection-timeout: 1000ms
     validate-headers: true
     max-chunk-size: 8192B
@@ -55,5 +56,5 @@ logging:
   charset:
     console: UTF-8
     file: UTF-8
-trace: true
+trace: false
 debug: true
