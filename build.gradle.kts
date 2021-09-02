@@ -1,6 +1,6 @@
 plugins {
-    val kotlinVersion = "1.5.10"
-    val springBootVersion = "2.4.5"
+    val kotlinVersion = "1.5.30"
+    val springBootVersion = "2.5.4"
     val springDepsVersion = "1.0.11.RELEASE"
 
     java
@@ -18,26 +18,27 @@ repositories {
     mavenCentral()
 }
 
-val kotlinVersion = "1.5.10"
-val coroutinesVersion = "1.5.0"
-val junitVersion = "5.8.0-M1"
+val kotlinVersion = "1.5.30"
+val coroutinesVersion = "1.5.1"
+val junitVersion = "5.8.0-RC1"
 
-val mongodbVersion = "4.2.3"
-val kmongoVersion = "4.2.7"
+val mongodbVersion = "4.3.1"
+val kmongoVersion = "4.2.8"
 
-val springDocVersion = "1.5.8"
+val springDocVersion = "1.5.10"
 
 val opentracingApiVersion = "0.33.0"
 val opentracingSpringVersion = "0.5.9"
 
-val mockitoVersion = "3.9.0"
+val mockitoVersion = "3.11.2"
 val mockitoKotlinVersion = "3.2.0"
+
+val reactorVersion = "3.4.9"
+val reactorNettyVersion = "1.0.10"
 
 dependencies {
     annotationProcessor("org.springframework.boot", "spring-boot-configuration-processor")
     implementation("org.springframework.boot", "spring-boot-starter-webflux")
-//    implementation("com.graphql-java-kickstart", "graphql-kickstart-spring-boot-starter-webflux", "11.0.0")
-//    implementation("com.graphql-java-kickstart", "graphql-java-tools", "11.0.1")
     implementation("org.springdoc","springdoc-openapi-webflux-core", springDocVersion)
     implementation("org.springdoc","springdoc-openapi-webflux-ui", springDocVersion)
     implementation("org.springdoc","springdoc-openapi-kotlin", springDocVersion)
@@ -47,10 +48,10 @@ dependencies {
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib-jdk8"))
 
-    implementation("io.projectreactor", "reactor-core", "3.4.6")
-    implementation("io.projectreactor.netty", "reactor-netty", "1.0.7")
-    implementation("io.projectreactor.netty", "reactor-netty-http", "1.0.7")
-    implementation("io.projectreactor.netty", "reactor-netty-core", "1.0.7")
+    implementation("io.projectreactor", "reactor-core", reactorVersion)
+    implementation("io.projectreactor.netty", "reactor-netty", reactorNettyVersion)
+    implementation("io.projectreactor.netty", "reactor-netty-http", reactorNettyVersion)
+    implementation("io.projectreactor.netty", "reactor-netty-core", reactorNettyVersion)
 
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", coroutinesVersion)
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core-jvm", coroutinesVersion)
@@ -77,20 +78,24 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx", "kotlinx-coroutines-test", coroutinesVersion)
 }
 
+tasks.test {
+    useJUnitPlatform()
+}
+
 configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_16
 }
 tasks {
     compileKotlin {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "11"
+            jvmTarget = "16"
         }
     }
     compileTestKotlin {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "11"
+            jvmTarget = "16"
         }
     }
 }
