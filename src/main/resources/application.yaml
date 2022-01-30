@@ -42,6 +42,8 @@ spring:
   jackson:
     locale: en_US
     property-naming-strategy: SNAKE_CASE
+kmongo:
+
 
 springdoc:
   api-docs:

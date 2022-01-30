@@ -1,6 +1,6 @@
 plugins {
-    val kotlinVersion = "1.5.30"
-    val springBootVersion = "2.5.4"
+    val kotlinVersion = "1.6.10"
+    val springBootVersion = "2.6.3"
     val springDepsVersion = "1.0.11.RELEASE"
 
     java
@@ -18,23 +18,23 @@ repositories {
     mavenCentral()
 }
 
-val kotlinVersion = "1.5.30"
-val coroutinesVersion = "1.5.1"
-val junitVersion = "5.8.0-RC1"
+val kotlinVersion = "1.6.10"
+val coroutinesVersion = "1.6.0"
+val junitVersion = "5.8.2"
 
-val mongodbVersion = "4.3.1"
-val kmongoVersion = "4.2.8"
+val mongodbVersion = "4.4.1"
+val kmongoVersion = "4.4.0"
 
 val springDocVersion = "1.5.10"
 
 val opentracingApiVersion = "0.33.0"
 val opentracingSpringVersion = "0.5.9"
 
-val mockitoVersion = "3.11.2"
-val mockitoKotlinVersion = "3.2.0"
+val mockitoVersion = "4.3.1"
+val mockitoKotlinVersion = "4.0.0"
 
-val reactorVersion = "3.4.9"
-val reactorNettyVersion = "1.0.10"
+val reactorVersion = "3.4.14"
+val reactorNettyVersion = "1.0.15"
 
 dependencies {
     annotationProcessor("org.springframework.boot", "spring-boot-configuration-processor")
@@ -83,19 +83,19 @@ tasks.test {
 }
 
 configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_16
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 tasks {
     compileKotlin {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "16"
+            jvmTarget = "17"
         }
     }
     compileTestKotlin {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "16"
+            jvmTarget = "17"
         }
     }
 }
