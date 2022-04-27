@@ -78,16 +78,16 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx", "kotlinx-coroutines-test", coroutinesVersion)
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
-
-configure<JavaPluginExtension> {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
 
 tasks {
+    test {
+        useJUnitPlatform()
+    }
     compileKotlin {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
@@ -100,4 +100,5 @@ tasks {
             jvmTarget = "17"
         }
     }
+
 }
