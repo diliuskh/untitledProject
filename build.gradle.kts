@@ -1,7 +1,7 @@
 plugins {
-    val kotlinVersion = "1.7.20"
-    val springBootVersion = "2.7.4"
-    val springDepsVersion = "1.0.14.RELEASE"
+    val kotlinVersion = "1.7.21"
+    val springBootVersion = "3.0.0"
+    val springDepsVersion = "1.1.0"
 
     java
     kotlin("plugin.jpa") version kotlinVersion
@@ -18,23 +18,23 @@ repositories {
     mavenCentral()
 }
 
-val kotlinVersion = "1.7.20"
+val kotlinVersion = "1.7.21"
 val coroutinesVersion = "1.6.4"
 val junitVersion = "5.9.1"
 
-val mongodbVersion = "4.7.2"
-val kmongoVersion = "4.7.1"
+val mongodbVersion = "4.8.0"
+val kmongoVersion = "4.8.0"
 
-val springDocVersion = "1.6.11"
+val springDocVersion = "1.6.13"
 
 val opentracingApiVersion = "0.33.0"
 val opentracingSpringVersion = "0.5.9"
 
-val mockitoVersion = "4.8.0"
-val mockitoKotlinVersion = "4.0.0"
+val mockitoVersion = "4.9.0"
+val mockitoKotlinVersion = "4.1.0"
 
-val reactorVersion = "3.4.23"
-val reactorNettyVersion = "1.0.23"
+val reactorVersion = "3.5.0"
+val reactorNettyVersion = "1.1.0"
 
 dependencies {
     annotationProcessor("org.springframework.boot", "spring-boot-configuration-processor")
