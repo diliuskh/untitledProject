@@ -1,5 +1,5 @@
 plugins {
-    val kotlinVersion = "1.8.20"
+    val kotlinVersion = "1.8.21"
     val springBootVersion = "3.0.6"
     val springDepsVersion = "1.1.0"
 
@@ -18,7 +18,7 @@ repositories {
     mavenCentral()
 }
 
-val kotlinVersion = "1.8.20"
+val kotlinVersion = "1.8.21"
 val coroutinesVersion = "1.6.4"
 
 val mongodbVersion = "4.9.1"
