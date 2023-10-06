@@ -1,7 +1,7 @@
 plugins {
-    val kotlinVersion = "1.8.21"
-    val springBootVersion = "3.0.6"
-    val springDepsVersion = "1.1.0"
+    val kotlinVersion = "1.9.10"
+    val springBootVersion = "3.1.4"
+    val springDepsVersion = "1.1.3"
 
     java
     kotlin("plugin.jpa") version kotlinVersion
@@ -18,23 +18,23 @@ repositories {
     mavenCentral()
 }
 
-val kotlinVersion = "1.8.21"
-val coroutinesVersion = "1.6.4"
+val kotlinVersion = "1.9.10"
+val coroutinesVersion = "1.7.3"
 
-val mongodbVersion = "4.9.1"
-val kmongoVersion = "4.9.0"
+val mongodbVersion = "4.10.2"
+val kmongoVersion = "4.10.0"
 
 val springDocVersion = "1.7.0"
 
 val opentracingApiVersion = "0.33.0"
 val opentracingSpringVersion = "0.5.9"
 
-val reactorVersion = "3.5.5"
-val reactorNettyVersion = "1.1.6"
+val reactorVersion = "3.5.10"
+val reactorNettyVersion = "1.1.11"
 
-val junitVersion = "5.9.2"
-val mockitoVersion = "5.3.1"
-val mockitoKotlinVersion = "4.1.0"
+val junitVersion = "5.10.0"
+val mockitoVersion = "5.5.0"
+val mockitoKotlinVersion = "5.1.0"
 
 dependencies {
     annotationProcessor("org.springframework.boot", "spring-boot-configuration-processor")
@@ -80,7 +80,7 @@ dependencies {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(20))
     }
 }
 
@@ -91,13 +91,13 @@ tasks {
     compileKotlin {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "17"
+            jvmTarget = "20"
         }
     }
     compileTestKotlin {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "17"
+            jvmTarget = "20"
         }
     }
 
