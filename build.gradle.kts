@@ -4,7 +4,6 @@ plugins {
     val springDepsVersion = "1.1.3"
 
     java
-    kotlin("plugin.jpa") version kotlinVersion
     id("org.springframework.boot") version springBootVersion
     id("io.spring.dependency-management") version springDepsVersion
     kotlin("jvm") version kotlinVersion
@@ -78,11 +77,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx", "kotlinx-coroutines-test", coroutinesVersion)
 }
 
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(20))
-    }
-}
+
 
 tasks {
     test {
@@ -90,14 +85,17 @@ tasks {
     }
     compileKotlin {
         kotlinOptions {
-            freeCompilerArgs = listOf("-Xjsr305=strict")
             jvmTarget = "20"
         }
     }
     compileTestKotlin {
         kotlinOptions {
-            freeCompilerArgs = listOf("-Xjsr305=strict")
             jvmTarget = "20"
+        }
+    }
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(20))
         }
     }
 
