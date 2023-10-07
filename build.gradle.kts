@@ -68,6 +68,7 @@ dependencies {
     // MongoDB
     implementation("org.litote.kmongo:kmongo-coroutine:$kmongoVersion")
     implementation("org.mongodb:mongodb-driver-reactivestreams:$mongodbVersion")
+    implementation("org.mongodb:mongodb-driver-kotlin-coroutine:$mongodbVersion")
 
     // Testing
     testImplementation(platform("org.junit:junit-bom:$junitVersion"))
