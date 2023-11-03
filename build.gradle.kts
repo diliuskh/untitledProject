@@ -1,5 +1,5 @@
 // Define Versions
-val kotlinVersion = "1.9.10"
+val kotlinVersion = "1.9.20"
 val springBootVersion = "3.1.4"
 val springDepsVersion = "1.1.3"
 val springDocVersion = "1.7.0"
@@ -16,7 +16,7 @@ val mockitoKotlinVersion = "5.1.0"
 
 // Plugins
 plugins {
-    val kotlinVersion = "1.9.10"
+    val kotlinVersion = "1.9.20"
     val springBootVersion = "3.1.4"
     val springDepsVersion = "1.1.3"
 
