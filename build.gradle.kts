@@ -20,7 +20,7 @@ val osArch: String by extra { System.getProperty("os.arch").lowercase().let {
     when(it) {
         "aarch64", "aarch-64", "aarch_64" -> "aarch_64"
         "x86-64", "x86_64" -> "x86_64"
-        else -> throw IllegalStateException("Unsupported OS Architecture: $it")
+        else -> error("Unsupported OS Architecture: $it")
     }
 } }
 
@@ -81,6 +81,9 @@ configurations.all {
                 "org.mockito.kotlin" -> {
                     useVersion(mockitoKotlinVersion)
                 }
+                "org.yaml" -> {
+                    useVersion("2.2")
+                }
             }
         }
     }
@@ -93,7 +96,6 @@ dependencies {
     // Spring Boot
     implementation("org.springframework.boot:spring-boot-starter-webflux:$springBootVersion")
     implementation("org.springframework.boot:spring-boot-starter-reactor-netty:$springBootVersion")
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive:$springBootVersion")
     implementation("org.springdoc:springdoc-openapi-webflux-core:$springDocVersion")
     implementation("org.springdoc:springdoc-openapi-webflux-ui:$springDocVersion")
     implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion")
@@ -110,7 +112,7 @@ dependencies {
         osName.contains("linux") -> implementation("io.netty:netty-transport-native-epoll:$nettyVersion:linux-$osArch")
         osName.contains("mac") -> implementation("io.netty:netty-transport-native-kqueue:$nettyVersion:osx-$osArch")
         osName.contains("win") -> implementation("io.netty:netty-transport-native-epoll:$nettyVersion:windows-$osArch")
-        else -> throw IllegalStateException("Unsupported OS: $osName")
+        else -> error("Unsupported OS: $osName")
     }
 
 
