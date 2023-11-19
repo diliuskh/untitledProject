@@ -1,4 +1,4 @@
-FROM amazoncorretto:20-alpine-full
+FROM amazoncorretto:21-alpine3.18-full
 VOLUME /tmp
 ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} untitled.jar
