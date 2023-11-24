@@ -1,18 +1,15 @@
 package net.dilius.untitled.domain.users
 
 import org.litote.kmongo.id.StringId
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RestController
+import org.litote.kmongo.newId
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class UserController(private val userService: UserService) {
 
     @GetMapping("/users/{id}")
-    suspend fun getUser(id: String): User? {
-        return userService.findUserById(StringId(id))
+    suspend fun getUser(@PathVariable id: String): User? {
+        return userService.findUserById(id)
     }
 
     @GetMapping("/users")
@@ -21,17 +18,17 @@ class UserController(private val userService: UserService) {
     }
 
     @PostMapping("/users")
-    suspend fun saveUser(user: User) {
+    suspend fun saveUser(@RequestBody user: User) {
         userService.saveUser(user)
     }
 
     @PutMapping("/users")
-    suspend fun updateUser(user: User) {
+    suspend fun updateUser(@RequestBody user: User) {
         userService.updateUser(user)
     }
 
     @PatchMapping("/users")
-    suspend fun patchUser(user: User) {
+    suspend fun patchUser(@RequestBody user: User) {
         userService.updateUser(user)
     }
 

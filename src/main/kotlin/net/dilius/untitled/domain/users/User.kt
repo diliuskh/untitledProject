@@ -1,12 +1,13 @@
 package net.dilius.untitled.domain.users
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import org.litote.kmongo.Id
-import org.litote.kmongo.newId
+import org.bson.types.ObjectId
 
 @Serializable
 data class User(
-    val id: Id<User> = newId(),
+    @SerialName("_id")
+    val id: String = ObjectId().toHexString(),
     val name: String,
     val email: String,
     val password: String)

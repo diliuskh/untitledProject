@@ -6,14 +6,15 @@ import com.mongodb.connection.TransportSettings
 import com.mongodb.reactivestreams.client.MongoClient
 import io.netty.channel.EventLoopGroup
 import io.netty.channel.socket.SocketChannel
+import org.litote.kmongo.coroutine.coroutine
+import org.litote.kmongo.reactivestreams.KMongo
+import org.litote.kmongo.util.KMongoUtil
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.DependsOn
 
 @Configuration
-@DependsOn("nettyConfiguration")
 class MongoConfiguration {
 
     @Bean
@@ -35,7 +36,10 @@ class MongoConfiguration {
             .transportSettings(transportSettings)
             .build()
             .let { settings ->
-                return com.mongodb.reactivestreams.client.MongoClients.create(settings)
+                return KMongo.createClient(settings)
             }
     }
+
+    @Bean
+    fun coroutineClient(mongoClient: MongoClient) = mongoClient.coroutine
 }
