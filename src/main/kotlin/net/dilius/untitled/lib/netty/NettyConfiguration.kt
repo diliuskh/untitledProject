@@ -29,7 +29,7 @@ class NettyConfiguration {
 
     }
 
-    @Bean
+    @Bean("clientSocketChannel")
     fun socketChannelClass(): Class<out SocketChannel> {
         return if (Epoll.isAvailable())
             EpollSocketChannel::class.java

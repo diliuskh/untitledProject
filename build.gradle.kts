@@ -1,5 +1,5 @@
 // Define Versions
-val kotlinVersion = "1.9.20"
+val kotlinVersion = "1.9.21"
 val springBootVersion = "3.1.5"
 val springDepsVersion = "1.1.4"
 val springDocVersion = "1.7.0"
@@ -26,7 +26,7 @@ val osArch: String by extra { System.getProperty("os.arch").lowercase().let {
 
 // Plugins
 plugins {
-    val kotlinVersion = "1.9.20"
+    val kotlinVersion = "1.9.21"
     val springBootVersion = "3.1.4"
     val springDepsVersion = "1.1.3"
 
@@ -34,6 +34,8 @@ plugins {
     id("org.springframework.boot") version springBootVersion
     id("io.spring.dependency-management") version springDepsVersion
     kotlin("jvm") version kotlinVersion
+    kotlin("plugin.serialization") version kotlinVersion
+    kotlin("plugin.noarg") version kotlinVersion
     kotlin("plugin.spring") version kotlinVersion
 }
 
@@ -123,6 +125,9 @@ dependencies {
     implementation("io.projectreactor.netty:reactor-netty:$reactorNettyVersion") {
         exclude(group = "io.netty")
     }
+
+    // Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
