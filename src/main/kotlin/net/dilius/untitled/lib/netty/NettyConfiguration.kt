@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Configuration
 @Configuration()
 class NettyConfiguration {
 
+    @Bean("clientEventLoopGroup")
     fun eventLoopGroup(): EventLoopGroup {
         val numberOfThreads = Runtime.getRuntime().availableProcessors()
 

@@ -4,25 +4,27 @@ import com.mongodb.ConnectionString
 
 private const val DEFAULT_HOST = "localhost"
 private const val DEFAULT_PORT = 27017
-private const val DEFAULT_DB = "test"
+private const val DEFAULT_DB = "untitled"
+private const val DEFAULT_USER = "untitled"
+private const val DEFAULT_PASSWORD = "password"
 private const val DEFAULT_OPTS = ""
 
 class ConnectionStringBuilder {
 
-    private var username: String? = null
-    private var password: String? = null
+    private var username: String = DEFAULT_USER
+    private var password: String = DEFAULT_PASSWORD
     private var host = DEFAULT_HOST
     private var port = DEFAULT_PORT
     private var database: String = DEFAULT_DB
     private var options = DEFAULT_OPTS
 
-    fun withUsername(username: String?): ConnectionStringBuilder {
-        username?.let { this.username = it }
+    fun withUsername(username: String): ConnectionStringBuilder {
+        username.let { this.username = it }
         return this
     }
 
-    fun withPassword(password: String?): ConnectionStringBuilder {
-        password?.let {  this.password = it }
+    fun withPassword(password: String): ConnectionStringBuilder {
+        password.let {  this.password = it }
         return this
     }
 
@@ -58,9 +60,7 @@ class ConnectionStringBuilder {
 
     fun build(): ConnectionString {
         val connectionString = StringBuilder("mongodb://")
-        if (username != null && password != null) {
-            connectionString.append(username).append(":").append(password).append("@")
-        }
+        connectionString.append(username).append(":").append(password).append("@")
         connectionString.append(host).append(":").append(port)
         connectionString.append("/").append(database)
         if (options.isNotEmpty()) {

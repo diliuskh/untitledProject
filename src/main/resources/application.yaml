@@ -32,7 +32,7 @@ spring:
     locale: en_US
     property-naming-strategy: SNAKE_CASE
 mongodb:
-    uri: mongodb://localhost:27017
+    uri: ${MONGO_URL:mongodb://untitled:password@localhost:27017/?retryWrites=true&serverSelectionTimeoutMS=5000&connectTimeoutMS=10000&authSource=admin&authMechanism=SCRAM-SHA-1}
 
 
 
@@ -52,4 +52,4 @@ logging:
     console: UTF-8
     file: UTF-8
 trace: false
-debug: true
+debug: false
