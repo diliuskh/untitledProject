@@ -155,13 +155,13 @@ tasks {
     test { useJUnitPlatform() }
 
     compileKotlin {
-        kotlinOptions { jvmTarget = "20" }
+        kotlinOptions { jvmTarget = "21" }
     }
     compileTestKotlin {
-        kotlinOptions { jvmTarget = "20" }
+        kotlinOptions { jvmTarget = "21" }
     }
 
     java {
-        toolchain { languageVersion.set(JavaLanguageVersion.of(20)) }
+        toolchain { languageVersion.set(JavaLanguageVersion.of(21)) }
     }
 }
