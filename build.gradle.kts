@@ -1,6 +1,6 @@
 // Define Versions
 val kotlinVersion = "1.9.21"
-val springBootVersion = "3.1.5"
+val springBootVersion = "3.2.0"
 val springDepsVersion = "1.1.4"
 val springDocVersion = "1.7.0"
 val coroutinesVersion = "1.7.3"
@@ -27,7 +27,7 @@ val osArch: String by extra { System.getProperty("os.arch").lowercase().let {
 // Plugins
 plugins {
     val kotlinVersion = "1.9.21"
-    val springBootVersion = "3.1.4"
+    val springBootVersion = "3.2.0"
     val springDepsVersion = "1.1.3"
 
     java
@@ -102,6 +102,10 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-webflux-ui:$springDocVersion")
     implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion")
     runtimeOnly("org.springframework.boot:spring-boot-devtools:$springBootVersion")
+
+    // Security
+    implementation("org.springframework.boot:spring-boot-starter-security:$springBootVersion")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client:$springBootVersion")
 
     // Kotlin
     implementation("org.jetbrains.kotlin:kotlin-reflect")

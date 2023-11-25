@@ -31,10 +31,56 @@ spring:
   jackson:
     locale: en_US
     property-naming-strategy: SNAKE_CASE
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope: openid,profile,email
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            client-name: Google
+          facebook:
+            client-id: ${FACEBOOK_CLIENT_ID}
+            client-secret: ${FACEBOOK_CLIENT_SECRET}
+            scope: email,public_profile
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            client-name: Facebook
+          twitter:
+            client-id: ${TWITTER_CLIENT_ID}
+            client-secret: ${TWITTER_CLIENT_SECRET}
+            scope: email,public_profile
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            client-name: Twitter
+          tiktok:
+            client-id: ${TIKTOK_CLIENT_ID}
+            client-secret: ${TIKTOK_CLIENT_SECRET}
+            scope: user.info.basic.read
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            client-name: TikTok
+          vk:
+            client-id: ${VK_CLIENT_ID}
+            client-secret: ${VK_CLIENT_SECRET}
+            scope: email,public_profile
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            client-name: VK
+          linkedin:
+            client-id: ${LINKEDIN_CLIENT_ID}
+            client-secret: ${LINKEDIN_CLIENT_SECRET}
+            scope: r_liteprofile,r_emailaddress
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            client-name: LinkedIn
+
+
 mongodb:
     uri: ${MONGO_URL:mongodb://untitled:password@localhost:27017/?retryWrites=true&serverSelectionTimeoutMS=5000&connectTimeoutMS=10000&authSource=admin&authMechanism=SCRAM-SHA-1}
-
-
 
 
 springdoc:
@@ -44,6 +90,7 @@ springdoc:
   swagger-ui:
     path: /api-docs/swagger-ui.html
     enabled: true
+
 
 logging:
   level:
