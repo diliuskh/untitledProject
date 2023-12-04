@@ -96,11 +96,36 @@ dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:$springBootVersion")
 
     // Spring Boot
-    implementation("org.springframework.boot:spring-boot-starter-webflux:$springBootVersion")
-    implementation("org.springframework.boot:spring-boot-starter-reactor-netty:$springBootVersion")
-    implementation("org.springdoc:springdoc-openapi-webflux-core:$springDocVersion")
-    implementation("org.springdoc:springdoc-openapi-webflux-ui:$springDocVersion")
-    implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion")
+    implementation("org.springframework.boot:spring-boot-starter-webflux:$springBootVersion") {
+        exclude("com.fasterxml.jackson.core")
+        exclude("com.fasterxml.jackson.dataformat")
+        exclude("com.fasterxml.jackson.datatype")
+        exclude("com.fasterxml.jackson.module")
+    }
+    implementation("org.springframework.boot:spring-boot-starter-reactor-netty:$springBootVersion"){
+        exclude("com.fasterxml.jackson.core")
+        exclude("com.fasterxml.jackson.dataformat")
+        exclude("com.fasterxml.jackson.datatype")
+        exclude("com.fasterxml.jackson.module")
+    }
+    implementation("org.springdoc:springdoc-openapi-webflux-core:$springDocVersion"){
+        exclude("com.fasterxml.jackson.core")
+        exclude("com.fasterxml.jackson.dataformat")
+        exclude("com.fasterxml.jackson.datatype")
+        exclude("com.fasterxml.jackson.module")
+    }
+    implementation("org.springdoc:springdoc-openapi-webflux-ui:$springDocVersion"){
+        exclude("com.fasterxml.jackson.core")
+        exclude("com.fasterxml.jackson.dataformat")
+        exclude("com.fasterxml.jackson.datatype")
+        exclude("com.fasterxml.jackson.module")
+    }
+    implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion"){
+        exclude("com.fasterxml.jackson.core")
+        exclude("com.fasterxml.jackson.dataformat")
+        exclude("com.fasterxml.jackson.datatype")
+        exclude("com.fasterxml.jackson.module")
+    }
     runtimeOnly("org.springframework.boot:spring-boot-devtools:$springBootVersion")
 
     // Security
@@ -110,7 +135,7 @@ dependencies {
     // Kotlin
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+//    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     // Netty
     implementation("io.netty:netty-all:$nettyVersion")
