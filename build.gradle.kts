@@ -1,6 +1,6 @@
 // Define Versions
-val kotlinVersion = "1.9.21"
-val springBootVersion = "3.2.0"
+val kotlinVersion = "1.9.22"
+val springBootVersion = "3.2.2"
 val springDepsVersion = "1.1.4"
 val springDocVersion = "1.7.0"
 val coroutinesVersion = "1.7.3"
@@ -26,17 +26,13 @@ val osArch: String by extra { System.getProperty("os.arch").lowercase().let {
 
 // Plugins
 plugins {
-    val kotlinVersion = "1.9.21"
-    val springBootVersion = "3.2.0"
-    val springDepsVersion = "1.1.3"
 
-    java
-    id("org.springframework.boot") version springBootVersion
-    id("io.spring.dependency-management") version springDepsVersion
-    kotlin("jvm") version kotlinVersion
-    kotlin("plugin.serialization") version kotlinVersion
-    kotlin("plugin.noarg") version kotlinVersion
-    kotlin("plugin.spring") version kotlinVersion
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.spring.dependencies)
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.noarg)
+    alias(libs.plugins.kotlin.spring)
 }
 
 // Project Info
@@ -53,35 +49,35 @@ configurations.all {
         eachDependency {
             when (requested.group) {
                 "io.netty" -> {
-                    useVersion(nettyVersion)
+                    useVersion(libs.versions.netty.get())
                 }
                 "org.jetbrains.kotlin" -> {
-                    useVersion(kotlinVersion)
+                    useVersion(libs.versions.kotlin.get())
                 }
                 "org.springframework.boot" -> {
-                    useVersion(springBootVersion)
+                    useVersion(libs.versions.spring.boot.get())
                 }
                 "io.projectreactor" -> {
-                    useVersion(reactorVersion)
+                    useVersion(libs.versions.reactor.core.get())
                 }
                 "io.projectreactor.netty" -> {
-                    useVersion(reactorNettyVersion)
+                    useVersion(libs.versions.reactor.netty.get())
                 }
                 "org.mongodb" -> {
-                    useVersion(mongodbVersion)
+                    useVersion(libs.versions.mongodb.get())
                 }
                 "org.jetbrains.kotlinx" -> {
                     if (requested.name.startsWith("kotlinx-coroutines")) {
-                        useVersion(coroutinesVersion)
+                        useVersion(libs.versions.coroutines.get())
                     } else if (requested.name.startsWith("kotlinx-serialization")) {
-                        useVersion(serializationVersion)
+                        useVersion(libs.versions.serialization.get())
                     }
                 }
                 "org.mockito" -> {
-                    useVersion(mockitoVersion)
+                    useVersion(libs.versions.mockito.core.get())
                 }
                 "org.mockito.kotlin" -> {
-                    useVersion(mockitoKotlinVersion)
+                    useVersion(libs.versions.mockito.kotlin.get())
                 }
                 "org.yaml" -> {
                     useVersion("2.2")
@@ -93,52 +89,36 @@ configurations.all {
 
 // Dependencies
 dependencies {
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:$springBootVersion")
+    annotationProcessor(libs.spring.boot.configuration.processor)
 
     // Spring Boot
-    implementation("org.springframework.boot:spring-boot-starter-webflux:$springBootVersion") {
+    implementation(libs.spring.boot.webflux) {
         exclude("com.fasterxml.jackson.core")
         exclude("com.fasterxml.jackson.dataformat")
         exclude("com.fasterxml.jackson.datatype")
         exclude("com.fasterxml.jackson.module")
     }
-    implementation("org.springframework.boot:spring-boot-starter-reactor-netty:$springBootVersion"){
+    implementation(libs.spring.boot.reactor.netty){
         exclude("com.fasterxml.jackson.core")
         exclude("com.fasterxml.jackson.dataformat")
         exclude("com.fasterxml.jackson.datatype")
         exclude("com.fasterxml.jackson.module")
     }
-    implementation("org.springdoc:springdoc-openapi-webflux-core:$springDocVersion"){
-        exclude("com.fasterxml.jackson.core")
-        exclude("com.fasterxml.jackson.dataformat")
-        exclude("com.fasterxml.jackson.datatype")
-        exclude("com.fasterxml.jackson.module")
-    }
-    implementation("org.springdoc:springdoc-openapi-webflux-ui:$springDocVersion"){
-        exclude("com.fasterxml.jackson.core")
-        exclude("com.fasterxml.jackson.dataformat")
-        exclude("com.fasterxml.jackson.datatype")
-        exclude("com.fasterxml.jackson.module")
-    }
-    implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion"){
-        exclude("com.fasterxml.jackson.core")
-        exclude("com.fasterxml.jackson.dataformat")
-        exclude("com.fasterxml.jackson.datatype")
-        exclude("com.fasterxml.jackson.module")
-    }
-    runtimeOnly("org.springframework.boot:spring-boot-devtools:$springBootVersion")
+
+    implementation(libs.spring.boot.actuator)
+    runtimeOnly(libs.spring.boot.devtools)
 
     // Security
-    implementation("org.springframework.boot:spring-boot-starter-security:$springBootVersion")
-    implementation("org.springframework.boot:spring-boot-starter-oauth2-client:$springBootVersion")
+    implementation(libs.spring.boot.security)
+    implementation(libs.spring.boot.oauth2)
 
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib")
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlin.reflect)
 //    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     // Netty
-    implementation("io.netty:netty-all:$nettyVersion")
+    implementation(libs.netty.all)
     when {
         osName.contains("linux") -> implementation("io.netty:netty-transport-native-epoll:$nettyVersion:linux-$osArch")
         osName.contains("mac") -> implementation("io.netty:netty-transport-native-kqueue:$nettyVersion:osx-$osArch")
@@ -148,7 +128,7 @@ dependencies {
 
 
     // Reactor
-    implementation("io.projectreactor:reactor-core:$reactorVersion") {
+    implementation(libs.reactor.core) {
         exclude(group = "io.netty")
     }
     implementation("io.projectreactor.netty:reactor-netty:$reactorNettyVersion") {
@@ -156,23 +136,23 @@ dependencies {
     }
 
     // Serialization
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+    implementation(libs.kotlin.serialization)
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:$coroutinesVersion")
+    implementation(libs.kotlin.coroutines)
+    implementation(libs.kotlin.coroutines.reactor)
 
     // MongoDB
-    implementation("org.litote.kmongo:kmongo-coroutine-serialization:$kmongoVersion")
-    implementation("org.mongodb:mongodb-driver-reactivestreams:$mongodbVersion")
+    implementation(libs.kmongo.coroutines.serialization)
+    implementation(libs.mongodb.reactivestreams)
 //    implementation("org.mongodb:mongodb-driver-kotlin-coroutine:$mongodbVersion")
 
     // Testing
-    testImplementation(platform("org.junit:junit-bom:$junitVersion"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("org.mockito:mockito-core:$mockitoVersion")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
-    testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.spring.boot.test)
 }
 
 // Tasks
