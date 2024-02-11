@@ -96,6 +96,7 @@ dependencies {
     // Reactor
     implementation(libs.reactor.core)
     implementation(libs.reactor.netty)
+    implementation(libs.reactor.kotlin)
     // Serialization
     implementation(libs.kotlin.serialization)
 
