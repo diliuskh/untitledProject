@@ -1,28 +1,23 @@
-// Define Versions
-val kotlinVersion = "1.9.22"
-val springBootVersion = "3.2.2"
-val springDepsVersion = "1.1.4"
-val springDocVersion = "1.7.0"
-val coroutinesVersion = "1.7.3"
-val serializationVersion = "1.6.1"
-val mongodbVersion = "4.11.1"
-val kmongoVersion = "4.11.0"
-val nettyVersion = "4.1.101.Final"
-val reactorVersion = "3.6.0"
-val reactorNettyVersion = "1.1.13"
-val junitVersion = "5.10.1"
-val mockitoVersion = "5.7.0"
-val mockitoKotlinVersion = "5.1.0"
+
 
 // OS Info
-val osName: String by extra { System.getProperty("os.name").lowercase() }
-val osArch: String by extra { System.getProperty("os.arch").lowercase().let {
-    when(it) {
-        "aarch64", "aarch-64", "aarch_64" -> "aarch_64"
-        "x86-64", "x86_64" -> "x86_64"
-        else -> error("Unsupported OS Architecture: $it")
+val osName: String by extra { System.getProperty("os.name").lowercase().let {
+    when {
+        it.contains("mac") -> "osx"
+        it.contains("nix") || it.contains("linux")-> "linux"
+        else -> error("Unsupported OS: $it")
     }
+
 } }
+val osArch: String by extra {
+    System.getProperty("os.arch").lowercase().let {
+        when (it) {
+            "aarch64", "aarch-64", "aarch_64" -> "aarch_64"
+            "x86-64", "x86_64" -> "x86_64"
+            else -> error("Unsupported OS Architecture: $it")
+        }
+    }
+}
 
 // Plugins
 plugins {
@@ -51,21 +46,27 @@ configurations.all {
                 "io.netty" -> {
                     useVersion(libs.versions.netty.get())
                 }
+
                 "org.jetbrains.kotlin" -> {
                     useVersion(libs.versions.kotlin.get())
                 }
+
                 "org.springframework.boot" -> {
                     useVersion(libs.versions.spring.boot.get())
                 }
+
                 "io.projectreactor" -> {
                     useVersion(libs.versions.reactor.core.get())
                 }
+
                 "io.projectreactor.netty" -> {
                     useVersion(libs.versions.reactor.netty.get())
                 }
+
                 "org.mongodb" -> {
                     useVersion(libs.versions.mongodb.get())
                 }
+
                 "org.jetbrains.kotlinx" -> {
                     if (requested.name.startsWith("kotlinx-coroutines")) {
                         useVersion(libs.versions.coroutines.get())
@@ -73,14 +74,17 @@ configurations.all {
                         useVersion(libs.versions.serialization.get())
                     }
                 }
+
                 "org.mockito" -> {
                     useVersion(libs.versions.mockito.core.get())
                 }
+
                 "org.mockito.kotlin" -> {
                     useVersion(libs.versions.mockito.kotlin.get())
                 }
+
                 "org.yaml" -> {
-                    useVersion("2.2")
+                    useVersion(libs.versions.yaml.get())
                 }
             }
         }
@@ -92,19 +96,8 @@ dependencies {
     annotationProcessor(libs.spring.boot.configuration.processor)
 
     // Spring Boot
-    implementation(libs.spring.boot.webflux) {
-        exclude("com.fasterxml.jackson.core")
-        exclude("com.fasterxml.jackson.dataformat")
-        exclude("com.fasterxml.jackson.datatype")
-        exclude("com.fasterxml.jackson.module")
-    }
-    implementation(libs.spring.boot.reactor.netty){
-        exclude("com.fasterxml.jackson.core")
-        exclude("com.fasterxml.jackson.dataformat")
-        exclude("com.fasterxml.jackson.datatype")
-        exclude("com.fasterxml.jackson.module")
-    }
-
+    implementation(libs.spring.boot.webflux)
+    implementation(libs.spring.boot.reactor.netty)
     implementation(libs.spring.boot.actuator)
     runtimeOnly(libs.spring.boot.devtools)
 
@@ -115,26 +108,35 @@ dependencies {
     // Kotlin
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlin.reflect)
-//    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+    // Jackson
+    implementation(platform(libs.jackson.bom))
+    implementation(libs.jackson.core)
+    implementation(libs.jackson.databind)
+    implementation(libs.jackson.annotations)
+    implementation(libs.jackson.datatype.jdk8)
+    implementation(libs.jackson.datatype.jsr310)
+    implementation(libs.jackson.module.kotlin)
+
+    //Logging
+    implementation(libs.logback.classic)
+    implementation(libs.logback.core)
+    implementation(libs.slf4j.api)
+
 
     // Netty
-    implementation(libs.netty.all)
-    when {
-        osName.contains("linux") -> implementation("io.netty:netty-transport-native-epoll:$nettyVersion:linux-$osArch")
-        osName.contains("mac") -> implementation("io.netty:netty-transport-native-kqueue:$nettyVersion:osx-$osArch")
-        osName.contains("win") -> implementation("io.netty:netty-transport-native-epoll:$nettyVersion:windows-$osArch")
-        else -> error("Unsupported OS: $osName")
+    if (osName.contains("linux")) {
+        implementation(variantOf(libs.netty.epoll) { classifier("$osName-$osArch") })
+    } else if (osName.contains("osx")) {
+        implementation(variantOf(libs.netty.kqueue) { classifier("$osName-$osArch") })
+    } else {
+        throw GradleException("Unsupported OS: $osName")
     }
 
 
     // Reactor
-    implementation(libs.reactor.core) {
-        exclude(group = "io.netty")
-    }
-    implementation("io.projectreactor.netty:reactor-netty:$reactorNettyVersion") {
-        exclude(group = "io.netty")
-    }
-
+    implementation(libs.reactor.core)
+    implementation(libs.reactor.netty)
     // Serialization
     implementation(libs.kotlin.serialization)
 
@@ -153,6 +155,7 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.spring.boot.test)
+    testImplementation(libs.json.path)
 }
 
 // Tasks
