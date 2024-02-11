@@ -28,6 +28,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.noarg)
     alias(libs.plugins.kotlin.spring)
+    alias(libs.plugins.docker.compose)
 }
 
 // Project Info
@@ -45,46 +46,6 @@ configurations.all {
             when (requested.group) {
                 "io.netty" -> {
                     useVersion(libs.versions.netty.get())
-                }
-
-                "org.jetbrains.kotlin" -> {
-                    useVersion(libs.versions.kotlin.get())
-                }
-
-                "org.springframework.boot" -> {
-                    useVersion(libs.versions.spring.boot.get())
-                }
-
-                "io.projectreactor" -> {
-                    useVersion(libs.versions.reactor.core.get())
-                }
-
-                "io.projectreactor.netty" -> {
-                    useVersion(libs.versions.reactor.netty.get())
-                }
-
-                "org.mongodb" -> {
-                    useVersion(libs.versions.mongodb.get())
-                }
-
-                "org.jetbrains.kotlinx" -> {
-                    if (requested.name.startsWith("kotlinx-coroutines")) {
-                        useVersion(libs.versions.coroutines.get())
-                    } else if (requested.name.startsWith("kotlinx-serialization")) {
-                        useVersion(libs.versions.serialization.get())
-                    }
-                }
-
-                "org.mockito" -> {
-                    useVersion(libs.versions.mockito.core.get())
-                }
-
-                "org.mockito.kotlin" -> {
-                    useVersion(libs.versions.mockito.kotlin.get())
-                }
-
-                "org.yaml" -> {
-                    useVersion(libs.versions.yaml.get())
                 }
             }
         }
@@ -123,7 +84,6 @@ dependencies {
     implementation(libs.logback.core)
     implementation(libs.slf4j.api)
 
-
     // Netty
     if (osName.contains("linux")) {
         implementation(variantOf(libs.netty.epoll) { classifier("$osName-$osArch") })
@@ -132,7 +92,6 @@ dependencies {
     } else {
         throw GradleException("Unsupported OS: $osName")
     }
-
 
     // Reactor
     implementation(libs.reactor.core)
@@ -147,7 +106,6 @@ dependencies {
     // MongoDB
     implementation(libs.kmongo.coroutines.serialization)
     implementation(libs.mongodb.reactivestreams)
-//    implementation("org.mongodb:mongodb-driver-kotlin-coroutine:$mongodbVersion")
 
     // Testing
     testImplementation(platform(libs.junit.bom))
@@ -160,6 +118,9 @@ dependencies {
 
 // Tasks
 tasks {
+    jar {
+        enabled = false
+    }
     test { useJUnitPlatform() }
 
     compileKotlin {
@@ -173,3 +134,15 @@ tasks {
         toolchain { languageVersion.set(JavaLanguageVersion.of(21)) }
     }
 }
+
+dockerCompose {
+    useComposeFiles = listOf("docker-compose.yml")
+    forceRecreate = true
+    stopContainers = true
+    removeOrphans = true
+    removeContainers = true
+    removeVolumes = true
+}
+
+dockerCompose.isRequiredBy(tasks.named("bootRun"))
+dockerCompose.isRequiredBy(tasks.named("bootTestRun"))

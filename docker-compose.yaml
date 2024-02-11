@@ -11,14 +11,6 @@ services:
     volumes:
       - mongodb_data:/data/db
 
-  untitled:
-    build: .
-    depends_on:
-      - mongodb
-    environment:
-      MONGO_URL: "mongodb://untitled:password@mongodb:27017/untitled"
-    ports:
-      - "8080:8080"
-
 volumes:
   mongodb_data:
+    driver: local
