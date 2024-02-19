@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
 
 @RestController
-class TestController() {
-
+class TestController {
     @GetMapping
     fun test(): Mono<String> = mono { coroutineScope { "Hello!" } }
 }

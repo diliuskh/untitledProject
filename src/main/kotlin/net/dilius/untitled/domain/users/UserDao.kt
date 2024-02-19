@@ -1,16 +1,12 @@
 package net.dilius.untitled.domain.users
 
-import com.mongodb.reactivestreams.client.MongoClient
-import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.litote.kmongo.Id
 import org.litote.kmongo.coroutine.CoroutineClient
 import org.litote.kmongo.eq
-import org.litote.kmongo.id.StringId
 import org.springframework.stereotype.Repository
 
 @Repository
 class UserDao(private val mongoClient: CoroutineClient) {
-
     suspend fun getUsers(): List<User> {
         return mongoClient
             .getDatabase("untitled")
@@ -24,7 +20,8 @@ class UserDao(private val mongoClient: CoroutineClient) {
             .getCollection<User>("users")
             .replaceOneById(user.id, user)
     }
-    suspend fun findUserById(id: String): User? {
+
+    suspend fun findUserById(id: Id<User>): User? {
         return mongoClient
             .getDatabase("untitled")
             .getCollection<User>("users")

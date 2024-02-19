@@ -13,28 +13,29 @@ import io.netty.channel.socket.nio.NioSocketChannel
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-
 @Configuration
 class NettyConfiguration {
-
     @Bean("clientEventLoopGroup")
     fun eventLoopGroup(): EventLoopGroup {
         val numberOfThreads = Runtime.getRuntime().availableProcessors()
 
-        return if (Epoll.isAvailable())
+        return if (Epoll.isAvailable()) {
             EpollEventLoopGroup(numberOfThreads)
-        else if (KQueue.isAvailable())
+        } else if (KQueue.isAvailable()) {
             KQueueEventLoopGroup(numberOfThreads)
-        else NioEventLoopGroup(numberOfThreads)
-
+        } else {
+            NioEventLoopGroup(numberOfThreads)
+        }
     }
 
     @Bean("clientSocketChannel")
     fun socketChannelClass(): Class<out SocketChannel> {
-        return if (Epoll.isAvailable())
+        return if (Epoll.isAvailable()) {
             EpollSocketChannel::class.java
-        else if (KQueue.isAvailable())
+        } else if (KQueue.isAvailable()) {
             KQueueSocketChannel::class.java
-        else NioSocketChannel::class.java
+        } else {
+            NioSocketChannel::class.java
+        }
     }
 }

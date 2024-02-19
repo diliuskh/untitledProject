@@ -1,14 +1,16 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 
 // OS Info
-val osName: String by extra { System.getProperty("os.name").lowercase().let {
-    when {
-        it.contains("mac") -> "osx"
-        it.contains("nix") || it.contains("linux")-> "linux"
-        else -> error("Unsupported OS: $it")
+val osName: String by extra {
+    System.getProperty("os.name").lowercase().let {
+        when {
+            it.contains("mac") -> "osx"
+            it.contains("nix") || it.contains("linux") -> "linux"
+            else -> error("Unsupported OS: $it")
+        }
     }
-
-} }
+}
 val osArch: String by extra {
     System.getProperty("os.arch").lowercase().let {
         when (it) {
@@ -21,14 +23,15 @@ val osArch: String by extra {
 
 // Plugins
 plugins {
-
     alias(libs.plugins.kotlin)
     alias(libs.plugins.spring.dependencies)
     alias(libs.plugins.spring.boot)
-    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.noarg)
     alias(libs.plugins.kotlin.spring)
     alias(libs.plugins.docker.compose)
+    alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.kotlin.ktlint)
+    alias(libs.plugins.kotlin.detekt)
 }
 
 // Project Info
@@ -60,7 +63,7 @@ dependencies {
     implementation(libs.spring.boot.webflux)
     implementation(libs.spring.boot.reactor.netty)
     implementation(libs.spring.boot.actuator)
-    runtimeOnly(libs.spring.boot.devtools)
+    developmentOnly(libs.spring.boot.devtools)
 
     // Security
     implementation(libs.spring.boot.security)
@@ -70,6 +73,10 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlin.reflect)
 
+    // Arrow
+    implementation(libs.arrow.core)
+    implementation(libs.arrow.fx.coroutines)
+
     // Jackson
     implementation(platform(libs.jackson.bom))
     implementation(libs.jackson.core)
@@ -78,13 +85,17 @@ dependencies {
     implementation(libs.jackson.datatype.jdk8)
     implementation(libs.jackson.datatype.jsr310)
     implementation(libs.jackson.module.kotlin)
+    implementation(libs.jackson.module.params)
 
-    //Logging
+    // Logging
     implementation(libs.logback.classic)
     implementation(libs.logback.core)
     implementation(libs.slf4j.api)
+    implementation(libs.kotlin.logging)
 
     // Netty
+    implementation(libs.netty.haproxy)
+
     if (osName.contains("linux")) {
         implementation(variantOf(libs.netty.epoll) { classifier("$osName-$osArch") })
     } else if (osName.contains("osx")) {
@@ -97,15 +108,13 @@ dependencies {
     implementation(libs.reactor.core)
     implementation(libs.reactor.netty)
     implementation(libs.reactor.kotlin)
-    // Serialization
-    implementation(libs.kotlin.serialization)
 
     // Coroutines
     implementation(libs.kotlin.coroutines)
     implementation(libs.kotlin.coroutines.reactor)
 
     // MongoDB
-    implementation(libs.kmongo.coroutines.serialization)
+    implementation(libs.kmongo.coroutines)
     implementation(libs.mongodb.reactivestreams)
 
     // Testing
@@ -136,8 +145,17 @@ tasks {
     }
 }
 
+ktlint {
+    outputToConsole = false
+    android = false
+    reporters {
+        reporter(ReporterType.HTML)
+    }
+}
+
 dockerCompose {
-    useComposeFiles = listOf("docker-compose.yml")
+    useComposeFiles = listOf("docker-compose.yaml")
+    dockerExecutable = "/usr/local/bin/docker"
     forceRecreate = true
     stopContainers = true
     removeOrphans = true

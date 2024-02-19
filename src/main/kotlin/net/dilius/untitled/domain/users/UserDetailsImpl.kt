@@ -3,7 +3,7 @@ package net.dilius.untitled.domain.users
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
-data class UserDetailsImpl(val user: User): UserDetails {
+data class UserDetailsImpl(val user: User) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         TODO("Not yet implemented")
     }
@@ -31,6 +31,4 @@ data class UserDetailsImpl(val user: User): UserDetails {
     override fun isEnabled(): Boolean {
         TODO("Not yet implemented")
     }
-
 }
-

@@ -10,7 +10,6 @@ private const val DEFAULT_PASSWORD = "password"
 private const val DEFAULT_OPTS = ""
 
 class ConnectionStringBuilder {
-
     private var username: String = DEFAULT_USER
     private var password: String = DEFAULT_PASSWORD
     private var host = DEFAULT_HOST
@@ -24,7 +23,7 @@ class ConnectionStringBuilder {
     }
 
     fun withPassword(password: String): ConnectionStringBuilder {
-        password.let {  this.password = it }
+        password.let { this.password = it }
         return this
     }
 
@@ -48,12 +47,18 @@ class ConnectionStringBuilder {
         return this
     }
 
-    fun withOption(key: String, value: String): ConnectionStringBuilder {
+    fun withOption(
+        key: String,
+        value: String,
+    ): ConnectionStringBuilder {
         this.options += "&$key=$value"
         return this
     }
 
-    fun withOption(key: String, value: Number): ConnectionStringBuilder {
+    fun withOption(
+        key: String,
+        value: Number,
+    ): ConnectionStringBuilder {
         this.options += "&$key=$value"
         return this
     }

@@ -8,7 +8,6 @@ import io.netty.channel.EventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
-import org.litote.kmongo.util.KMongoUtil
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -16,11 +15,10 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class MongoConfiguration {
-
     @Bean
     fun nettyTransportSettings(
         @Qualifier("clientEventLoopGroup") eventLoopGroup: EventLoopGroup,
-        @Qualifier("clientSocketChannel") socketChannel: Class<out SocketChannel>
+        @Qualifier("clientSocketChannel") socketChannel: Class<out SocketChannel>,
     ): NettyTransportSettings {
         return NettyTransportSettings
             .nettyBuilder()
@@ -30,7 +28,10 @@ class MongoConfiguration {
     }
 
     @Bean
-    fun mongoClient(@Value("\${mongodb.uri}") uri: String, transportSettings: TransportSettings): MongoClient {
+    fun mongoClient(
+        @Value("\${mongodb.uri}") uri: String,
+        transportSettings: TransportSettings,
+    ): MongoClient {
         MongoClientSettings.builder()
             .applyConnectionString(com.mongodb.ConnectionString(uri))
             .transportSettings(transportSettings)

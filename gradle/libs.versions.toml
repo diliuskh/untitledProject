@@ -7,7 +7,7 @@ coroutines = "1.7.3"
 serialization = "1.6.2"
 mongodb = "4.11.1"
 kmongo = "4.11.0"
-netty = "4.1.106.Final"
+netty = "4.1.107.Final"
 reactor-core = "3.6.2"
 reactor-netty = "1.1.15"
 junit = "5.10.2"
@@ -16,6 +16,8 @@ mockito-kotlin = "5.2.1"
 jackson = "2.16.1"
 yaml = "2.2"
 docker-compose = "0.17.6"
+mapstruct = "1.5.5.Final"
+arrow = "1.2.0"
 [plugins]
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
@@ -24,11 +26,17 @@ kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotl
 kotlin-noarg = { id = "org.jetbrains.kotlin.plugin.noarg", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 docker-compose = { id = "com.avast.gradle.docker-compose", version.ref = "docker-compose" }
+kotlin-ksp = { id = "com.google.devtools.ksp", version = "1.9.22-1.0.17" }
+kotlin-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "12.1.0" }
+kotlin-detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.5" }
 [libraries]
+arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
+arrow-fx-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines", version.ref = "arrow" }
 spring-boot-configuration-processor = { group = "org.springframework.boot", name = "spring-boot-configuration-processor", version.ref = "spring-boot" }
 spring-boot-webflux = { group = "org.springframework.boot", name = "spring-boot-starter-webflux", version.ref = "spring-boot" }
 spring-boot-reactor-netty = { group = "org.springframework.boot", name = "spring-boot-starter-reactor-netty", version.ref = "spring-boot" }
 spring-boot-actuator = { group = "org.springframework.boot", name = "spring-boot-starter-actuator", version.ref = "spring-boot" }
+spring-boot-data-mongodb = { group = "org.springframework.boot", name = "spring-boot-starter-data-mongodb", version.ref = "spring-boot" }
 spring-boot-test = { group = "org.springframework.boot", name = "spring-boot-starter-test", version.ref = "spring-boot" }
 spring-boot-devtools = { group = "org.springframework.boot", name = "spring-boot-devtools", version.ref = "spring-boot" }
 spring-boot-security = { group = "org.springframework.boot", name = "spring-boot-starter-security", version.ref = "spring-boot" }
@@ -38,12 +46,16 @@ kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", vers
 kotlin-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlin-coroutines-reactor = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-reactor", version.ref = "coroutines" }
 kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
+kotlin-serialization-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version = "0.5.0" }
+kotlin-logging = { group = "io.github.oshai", name = "kotlin-logging-jvm", version = "6.0.3" }
 reactor-core = { group = "io.projectreactor", name = "reactor-core", version.ref = "reactor-core" }
 reactor-kotlin = { group = "io.projectreactor.kotlin", name = "reactor-kotlin-extensions", version = "1.2.2" }
 reactor-netty = { group = "io.projectreactor.netty", name = "reactor-netty", version.ref = "reactor-netty" }
 kmongo-coroutines-serialization = { group = "org.litote.kmongo", name = "kmongo-coroutine-serialization", version.ref = "kmongo" }
+kmongo-coroutines = { group = "org.litote.kmongo", name = "kmongo-coroutine", version.ref = "kmongo" }
 mongodb-reactivestreams = { group = "org.mongodb", name = "mongodb-driver-reactivestreams", version.ref = "mongodb" }
 netty-all = { group = "io.netty", name = "netty-all", version.ref = "netty" }
+netty-haproxy = { group = "io.netty", name = "netty-codec-haproxy", version.ref = "netty" }
 netty-epoll = { group = "io.netty", name = "netty-transport-native-epoll", version.ref = "netty" }
 netty-kqueue = { group = "io.netty", name = "netty-transport-native-kqueue", version.ref = "netty" }
 mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito-core" }
@@ -61,6 +73,9 @@ jackson-annotations = { group = "com.fasterxml.jackson.core", name = "jackson-an
 jackson-datatype-jdk8 = { group = "com.fasterxml.jackson.datatype", name = "jackson-datatype-jdk8", version.ref = "jackson" }
 jackson-datatype-jsr310 = { group = "com.fasterxml.jackson.datatype", name = "jackson-datatype-jsr310", version.ref = "jackson" }
 jackson-module-kotlin = { group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version.ref = "jackson" }
+jackson-module-params = { group = "com.fasterxml.jackson.module", name = "jackson-module-parameter-names", version.ref = "jackson" }
 logback-core = { group = "ch.qos.logback", name = "logback-core", version = "1.4.14" }
 logback-classic = { group = "ch.qos.logback", name = "logback-classic", version = "1.4.14" }
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version = "2.0.12" }
+mapstruct = { group = "org.mapstruct", name = "mapstruct", version.ref = "mapstruct" }
+mapstruct-processor = { group = "org.mapstruct", name = "mapstruct-processor", version.ref = "mapstruct" }

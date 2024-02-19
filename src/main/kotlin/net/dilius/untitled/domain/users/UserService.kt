@@ -1,18 +1,16 @@
 package net.dilius.untitled.domain.users
 
-import org.litote.kmongo.Id
-import org.litote.kmongo.id.StringId
+import org.litote.kmongo.id.WrappedObjectId
 import org.springframework.stereotype.Service
 
 @Service
 class UserService(private val userDao: UserDao) {
-
     suspend fun updateUser(user: User) {
         userDao.updateUser(user)
     }
 
     suspend fun findUserById(id: String): User? {
-        return userDao.findUserById(id)
+        return userDao.findUserById(WrappedObjectId(id))
     }
 
     suspend fun findUserByEmail(email: String): User? {
