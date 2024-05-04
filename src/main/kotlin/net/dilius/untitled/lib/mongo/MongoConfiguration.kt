@@ -6,6 +6,7 @@ import com.mongodb.connection.TransportSettings
 import com.mongodb.reactivestreams.client.MongoClient
 import io.netty.channel.EventLoopGroup
 import io.netty.channel.socket.SocketChannel
+import org.litote.kmongo.coroutine.CoroutineClient
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 import org.springframework.beans.factory.annotation.Qualifier
@@ -43,4 +44,7 @@ class MongoConfiguration {
 
     @Bean
     fun coroutineClient(mongoClient: MongoClient) = mongoClient.coroutine
+
+    @Bean
+    fun mongoDatabase(coroutineClient: CoroutineClient) = coroutineClient.getDatabase("untitled")
 }

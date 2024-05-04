@@ -1,44 +1,30 @@
 package net.dilius.untitled.domain.users
 
 import org.litote.kmongo.Id
-import org.litote.kmongo.coroutine.CoroutineClient
+import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.eq
+import org.litote.kmongo.setTo
 import org.springframework.stereotype.Repository
 
 @Repository
-class UserDao(private val mongoClient: CoroutineClient) {
-    suspend fun getUsers(): List<User> {
-        return mongoClient
-            .getDatabase("untitled")
-            .getCollection<User>("users")
-            .find().toList()
-    }
+class UserDao(private val db: CoroutineCollection<User>) {
+    suspend fun getUsers(): List<User> = db.find().toList()
 
-    suspend fun updateUser(user: User) {
-        mongoClient
-            .getDatabase("untitled")
-            .getCollection<User>("users")
-            .replaceOneById(user.id, user)
-    }
+    suspend fun updateUser(user: User) = db.replaceOneById(user.id, user)
 
-    suspend fun findUserById(id: Id<User>): User? {
-        return mongoClient
-            .getDatabase("untitled")
-            .getCollection<User>("users")
-            .find(User::id eq id).first()
-    }
+    suspend fun updateUserPassword(
+        id: Id<User>,
+        password: String,
+    ) = db.updateOneById(id, User::password setTo password)
 
-    suspend fun findUserByEmail(email: String): User? {
-        return mongoClient
-            .getDatabase("untitled")
-            .getCollection<User>("users")
-            .find(User::email eq email).first()
-    }
+    suspend fun updateUserPasswordByUsername(
+        username: String,
+        password: String,
+    ) = db.updateOne(User::username eq username, User::password eq password)
 
-    suspend fun saveUser(user: User) {
-        mongoClient
-            .getDatabase("untitled")
-            .getCollection<User>("users")
-            .insertOne(user)
-    }
+    suspend fun findUserById(id: Id<User>): User? = db.find(User::id eq id).first()
+
+    suspend fun findUserByEmail(email: String): User? = db.find(User::email eq email).first()
+
+    suspend fun saveUser(user: User) = db.insertOne(user)
 }

@@ -9,6 +9,20 @@ class UserService(private val userDao: UserDao) {
         userDao.updateUser(user)
     }
 
+    suspend fun updateUserPassword(
+        id: String,
+        password: String,
+    ) {
+        userDao.updateUserPassword(WrappedObjectId(id), password)
+    }
+
+    suspend fun updateUserPasswordByUsername(
+        username: String,
+        password: String,
+    ) {
+        userDao.updateUserPasswordByUsername(username, password)
+    }
+
     suspend fun findUserById(id: String): User? {
         return userDao.findUserById(WrappedObjectId(id))
     }

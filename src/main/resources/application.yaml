@@ -37,15 +37,15 @@ spring:
       client:
         registration:
           google:
-            client-id: ${GOOGLE_CLIENT_ID:1085568731501-bf0c17m61e63npklsel9c74b8qoh4f8j.apps.googleusercontent.com}
-            client-secret: ${GOOGLE_CLIENT_SECRET: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}
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
             scope: openid,profile,email
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             authorization-grant-type: authorization_code
             client-name: Google
           facebook:
-            client-id: ${FACEBOOK_CLIENT_ID:1050664762695244}
-            client-secret: ${FACEBOOK_CLIENT_SECRET:fb6f6c8f416aa193f9203cac2d358099}
+            client-id: ${FACEBOOK_CLIENT_ID}
+            client-secret: ${FACEBOOK_CLIENT_SECRET}
             scope: email,public_profile
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             authorization-grant-type: authorization_code
